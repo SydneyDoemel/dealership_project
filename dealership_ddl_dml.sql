@@ -1,14 +1,16 @@
-ypObH8qVK15XaDwAVfmnFOGIG9BQMcDu
+-----------DDL----------------
 CREATE TABLE car(
     car_id SERIAL PRIMARY KEY,
     sales_date DATE,
     car_condition VARCHAR(4),
     car_cost NUMERIC(10,2)
 );
+
 CREATE TABLE customer (
   customer_id SERIAL PRIMARY KEY,
   customer_name VARCHAR(50)
 );
+
 CREATE TABLE parts (
   parts_id SERIAL PRIMARY KEY,
   parts_cost NUMERIC(10,2),
@@ -37,9 +39,6 @@ CREATE TABLE invoice (
     FOREIGN KEY (customer_id) REFERENCES customer(customer_id)
 );
 
-
-
-
 CREATE TABLE service_ticket (
     service_id SERIAL PRIMARY KEY,
     service_type VARCHAR(100),
@@ -53,86 +52,47 @@ CREATE TABLE service_ticket (
     FOREIGN KEY (mechanic_id) REFERENCES mechanic(mechanic_id),
     parts_id INT,
     FOREIGN KEY (parts_id) REFERENCES parts(parts_id)
-
 );
 
 
 
-INSERT INTO customer (
-    customer_name,
-    car_id
-)
-VALUES(
-    'Jason DeRulo',
-    1),(
-    'Samantha Panda',
-    2
-);
-INSERT INTO parts (
-    parts_cost,
-    part_description
-)
-VALUES(
-    10,
-    'Tire'
-    ),(
-   10,
-    'Windshield Wipers'
+--------------- DML ---------------------
 
-);
+-- INSERT CUSTOMER
+INSERT INTO customer (customer_name)
+VALUES('Sandra Bullock'),
+    ('Harry Potter'),
+    ('Nick Wahlberg');
 
+-- INSERT PARTS
+INSERT INTO parts (parts_cost,part_description)
+VALUES(10,'Tire'),
+(10,'Windshield Wipers');
 
-SELECT *
-FROM car;
-SELECT *
-FROM customer;
-SELECT *
-FROM mechanic;
-SELECT *
-FROM invoice;
-SELECT *
-FROM service_ticket;
-
+-- INSERT SERVICE TICKET
 INSERT INTO service_ticket (
     service_type,
     service_cost,
     service_date,
-    car_id
+    car_id,
+    customer_id,
+    mechanic_id,
+    parts_id
 )
-VALUES(
-    'Oil Change',
-    NULL,
-    '10-3-2019',
-    1
-    ),(
-    'Tire Change',
-    NULL,
-    '10-3-2019',
-    2
-);
+VALUES('New tires',200,'10-3-2018',3,1,2,1),
+('New windshield wipers',20,'10-3-2020',4,2,3,2);
 
+-- INSERT INVOICES
 INSERT INTO invoice(
     total_cost,
     car_id,
     salesperson_id,
     customer_id
 )
-VALUES(
-    NULL,
-    2,
-    2,
-    2
-),(
-    NULL,
-    1,
-    1,
-    1
-);
+VALUES(15000,1,4,1),
+(10000,3,3,2);
 
-
-
-
--- ADD  SALESPERSONFUNCTION
+-- ADD  SALESPERSON FUNCTION
 CREATE OR REPLACE FUNCTION new_salesperson(
     salesperson_name VARCHAR(50),
     email VARCHAR(50)
@@ -148,13 +108,11 @@ END
 $MAIN$
 
 SELECT new_salesperson('Rory Laurel','rl@email.com')
-SELECT new_salesperson'Alex Speed','as@email.com')
-SELECT new_salesperson('Arnold Engine','rl@email.com')
+SELECT new_salesperson('Alex Speed','as@email.com')
+SELECT new_salesperson('Arnold Engine','ae@email.com')
 SELECT new_salesperson('Jacky John','jj@email.com')
-SELECT new_salesperson('Arden Luv','aa@email.com')
+SELECT new_salesperson('Arden Luv','al@email.com')
 
-SELECT *
-FROM salesperson;
 
 -- ADD MECHANIC FUNCTION
 CREATE OR REPLACE FUNCTION new_mechanic(
@@ -172,8 +130,7 @@ $MAIN$
 
 SELECT new_mechanic('Guy Ferarri')
 SELECT new_mechanic('Barefoot Contesla')
-
-
+SELECT new_mechanic('Laura Bush')
 
 
 -- ADD CAR FUNCTION
@@ -191,3 +148,11 @@ BEGIN
     VALUES(sales_date,car_condition,car_cost);
 END
 $MAIN$
+
+SELECT add_car('12-3-2019','used',15000)
+SELECT add_car(NULL,'new',60000)
+SELECT add_car('3-3-2015','used',10000)
+SELECT add_car('10-1-2018','used',20000)
+SELECT add_car(NULL,'new',25000)
+SELECT *
+FROM  car;

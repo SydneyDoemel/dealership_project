@@ -1,0 +1,22 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "askForPassword": true,
+            "driver": "PostgreSQL",
+            "connectString": "postgres://jmqavbjg:jNV9d7Re-mXdsnU5DJB3Uq8ZUl5vDSAT@castor.db.elephantsql.com/jmqavbjg",
+            "name": "day2"
+        },
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "askForPassword": true,
+            "driver": "PostgreSQL",
+            "name": "dealership",
+            "connectString": "postgres://ygupcvvh:ypObH8qVK15XaDwAVfmnFOGIG9BQMcDu@ruby.db.elephantsql.com/ygupcvvh"
+        }
+    ]
+}
