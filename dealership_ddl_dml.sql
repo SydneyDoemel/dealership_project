@@ -1,4 +1,14 @@
+
+SELECT * FROM car;
+SELECT * FROM customer;
+SELECT * FROM parts;
+SELECT * FROM salesperson;
+SELECT * FROM mechanic;
+SELECT * FROM invoice;
+SELECT * FROM service_ticket;
+
 -----------DDL----------------
+
 CREATE TABLE car(
     car_id SERIAL PRIMARY KEY,
     sales_date DATE,
